@@ -12,9 +12,8 @@ from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth import login as login_user
 
-from myapp.models import patient
+from myapp.models import patient,doctor
 from myapp.models import Data
-from myapp.models import DocProfile
 from myapp.models import DocProfile
 from django.db.models import Q
 from myapp.models import Payment
@@ -81,6 +80,9 @@ def register(request):
 def loginP(request):
     if request.user.is_authenticated:
         return redirect('Pboard')
+
+        
+
     else:
         if request.method=="POST":
             
@@ -95,6 +97,18 @@ def loginP(request):
 
            else:
                messages.info(request,"Username or Password is incorrect")
+
+        if request.method=="POST":
+            username=request.POST.get('username')
+            #email=request.POST.get('email')
+            password=request.POST.get('password')
+            #password2=request.POST.get('password2')
+            Patient=patient(username=username,password=password)
+
+            Patient.save()
+
+    
+   
             
 
         context={}
@@ -232,3 +246,22 @@ def Pboard(request):
 @login_required(login_url="doctorLogin")
 def Dboard(request):
     return render(request,"doctorDashboard.html")
+
+def reminder(request):
+    
+    if 'q' in request.GET:
+        q=request.GET['q']
+        #data=Data.objects.filter(first_name__icontains=q)
+        multiple_q=Q(Q(name__icontains=q) | Q(email__icontains=q))
+        data=Payment.objects.filter(multiple_q)
+
+    else:
+        data=Payment.objects.all()
+
+    context={
+        'data':data
+    }
+
+    return render(request,'reminder.html',context)
+
+    

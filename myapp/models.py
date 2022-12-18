@@ -5,11 +5,11 @@ from django.db import models
 class patient(models.Model):
     username = models.CharField(max_length=200)
 
-    email = models.CharField(max_length=200)
+    #email = models.CharField(max_length=200)
 
-    password1 = models.CharField(max_length=128)
+    password = models.CharField(max_length=128)
 
-    password2 = models.CharField(max_length=128)
+    #password2 = models.CharField(max_length=128)
 
 
 class doctor(models.Model):

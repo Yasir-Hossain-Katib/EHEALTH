@@ -29,7 +29,9 @@ urlpatterns = [
 
     path('Pboard/', views.Pboard, name='Pboard'),
 
-    path('Dboard/', views.Dboard, name='Dboard')
+    path('Dboard/', views.Dboard, name='Dboard'),
+
+    path('reminder/', views.reminder, name='reminder')
 
     
 
